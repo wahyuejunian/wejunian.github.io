@@ -18,7 +18,7 @@ body {
 body::before {
   content: "";
   position: fixed;
-  background: #2c2c2c; /*Abu-abu gelap */
+  background: #dee2e6; /* Abu-abu*/
   background-size: cover;
   left: 0;
   right: 0;
