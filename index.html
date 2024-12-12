@@ -374,16 +374,51 @@
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-geo">
           <!-- <br> -->
-          <center><h4>Teori Potensial</h4></center>
-          <div class="portfolio-wrap">
-            <img src="assets/img/teaching/Tepot.png" class="img-fluid" alt="">
-            <div class="portfolio-info">
-              <h4>Teori Potensial</h4>
-              <div class="portfolio-links">
-                <a href="teaching/Tepot.html" data-gall="portfolioDetailsGallery" data-vbtype="iframe" class="venobox" title="Project Details"><i class="bx bx-info-circle"></i></a>
-              </div>
+          <div class="full-window">
+            <div class="markdown-viewer">
+              <center><h1>Teori Potensial</h1></center>
+              <div id="markdown-content"></div>
             </div>
           </div>
+
+          <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+          <script>
+            // Path ke file Markdown
+            const markdownPath = "teaching/maxwell.md";
+          
+            // Inisialisasi Showdown untuk konversi Markdown ke HTML
+            const converter = new showdown.Converter();
+          
+            // Memuat file Markdown
+            fetch(markdownPath)
+              .then(response => response.text())
+              .then(markdown => {
+                const html = converter.makeHtml(markdown);
+                document.getElementById("markdown-content").innerHTML = html;
+              })
+              .catch(error => console.error("Error loading Markdown file:", error));
+          </script>
+          
+          <style>
+            .full-window {
+              width: 100%;
+              height: 100vh;
+              overflow: auto;
+              padding: 20px;
+              box-sizing: border-box;
+              font-family: Arial, sans-serif;
+              background-color: #f9f9f9;
+            }
+            .markdown-viewer {
+              max-width: 800px;
+              margin: 0 auto;
+              padding: 20px;
+              background-color: white;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+              border-radius: 8px;
+            }
+          </style>
+
         </div>
 
         <!-- <div class="col-lg-4 col-md-6 portfolio-item filter-app">
