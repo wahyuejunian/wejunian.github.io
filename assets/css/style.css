@@ -33,7 +33,7 @@ body::before {
 }
 
 a {
-  color: #a10303;
+  color: #a10303; /*Merah Maroon*/
 }
 
 a:hover {
@@ -182,7 +182,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-menu a:hover, .nav-menu .active > a, .nav-menu li:hover > a {
-  color: #12d640;
+  color: #a10303; /*Merah Maroon*/
   text-decoration: none;
 }
 
