@@ -37,7 +37,7 @@ a {
 }
 
 a:hover {
-  color: #12d640;
+  color: #12d640; /* Hijau*/
   text-decoration: none;
 }
 
@@ -80,12 +80,12 @@ h1, h2, h3, h4, h5, h6 {
 #header h2 {
   font-size: 24px;
   margin-top: 20px;
-  color: #12d640;
+  color: #12d640; /* Hijau*/
 }
 
 #header h2 span {
-  color: #ffc107;
-  border-bottom: 2px solid #1c7d32;
+  color: #ffc107; /* Kuning*/
+  border-bottom: 2px solid #1c7d32; /* Hijau Tua*/
   padding-bottom: 6px;
 }
 
@@ -114,7 +114,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header .social-links a:hover {
-  background: #1c7d32;
+  background: #1c7d32; /* Hijau Tua*/
 }
 
 @media (max-width: 992px) {
@@ -170,7 +170,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 2px;
   bottom: -4px;
   left: 0;
-  background-color: #9e7f25;
+  background-color: #9e7f25; /* Coklat-Kuning */
   visibility: hidden;
   width: 0px;
   transition: all 0.3s ease-in-out 0s;
@@ -239,7 +239,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .mobile-nav a:hover, .mobile-nav .active > a, .mobile-nav li:hover > a {
-  color: #1c7d32;
+  color: #1c7d32;/* Hijau Tua*/
   text-decoration: none;
 }
 
@@ -276,7 +276,7 @@ h1, h2, h3, h4, h5, h6 {
   left: 0;
   top: 0;
   right: 0;
-  background: #09203a;
+  background: #09203a; /* Navy */
 }
 
 #header.header-top .social-links, #header.header-top h2 {
@@ -348,7 +348,7 @@ section .container {
   margin: 0 0 20px 0;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #dee2e6;
+  color: #dee2e6; /* Abu-abu*/
   font-family: "Poppins", sans-serif;
 }
 
@@ -357,7 +357,7 @@ section .container {
   width: 120px;
   height: 1px;
   display: inline-block;
-  background: #dee2e6;
+  background: #dee2e6; /* Abu-abu*/
   margin: 4px 10px;
 }
 
