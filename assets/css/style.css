@@ -348,7 +348,7 @@ section .container {
   margin: 0 0 20px 0;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #dee2e6; /* Abu-abu*/
+  color: #022b59; /* Navy soft*/
   font-family: "Poppins", sans-serif;
 }
 
@@ -357,7 +357,7 @@ section .container {
   width: 120px;
   height: 1px;
   display: inline-block;
-  background: #dee2e6; /* Abu-abu*/
+  background: #022b59; /* Navy soft*/
   margin: 4px 10px;
 }
 
