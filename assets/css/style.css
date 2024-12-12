@@ -18,7 +18,7 @@ body {
 body::before {
   content: "";
   position: fixed;
-  background: #dee2e6; /* Abu-abu*/
+  background: #022b59; /* Navy soft*/
   background-size: cover;
   left: 0;
   right: 0;
