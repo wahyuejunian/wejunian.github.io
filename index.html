@@ -366,74 +366,91 @@
                 <th>Status</th>
               </tr>
             </thead>
+            <!-- CSV Parser -->
+            <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+            
             <script>
-            function parseCSV(text) {
-              const rows = [];
-              let row = [];
-              let current = '';
-              let inQuotes = false;
+            let studentsData = [];
             
-              for (let i = 0; i < text.length; i++) {
-                const char = text[i];
-                const next = text[i + 1];
+            Papa.parse('data/students.csv', {
+              download: true,
+              header: true,
+              complete: function(results) {
+                studentsData = results.data.filter(s => s.nama);
             
-                if (char === '"' && next === '"') {
-                  current += '"';
-                  i++;
-                } else if (char === '"') {
-                  inQuotes = !inQuotes;
-                } else if (char === ',' && !inQuotes) {
-                  row.push(current);
-                  current = '';
-                } else if ((char === '\n' || char === '\r') && !inQuotes) {
-                  if (current || row.length) {
-                    row.push(current);
-                    rows.push(row);
-                    row = [];
-                    current = '';
+                // SORT: angkatan (ASC) lalu nama (A-Z)
+                studentsData.sort((a, b) => {
+                  if (a.angkatan !== b.angkatan) {
+                    return a.angkatan - b.angkatan;
                   }
-                } else {
-                  current += char;
-                }
+                  return a.nama.localeCompare(b.nama);
+                });
+            
+                populateAngkatanFilter(studentsData);
+                renderTable(studentsData);
               }
-              if (current || row.length) {
-                row.push(current);
-                rows.push(row);
-              }
-              return rows;
+            });
+            
+            function populateAngkatanFilter(data) {
+              const select = document.getElementById('filter-angkatan');
+              const angkatan = [...new Set(data.map(s => s.angkatan))];
+            
+              angkatan.forEach(a => {
+                const option = document.createElement('option');
+                option.value = a;
+                option.textContent = a;
+                select.appendChild(option);
+              });
             }
             
-            fetch('data/students.csv')
-              .then(res => res.text())
-              .then(text => {
-                const data = parseCSV(text);
-                const table = document.getElementById('students-table');
+            function renderTable(data) {
+              const table = document.getElementById('students-table');
+              table.innerHTML = '';
             
-                data.slice(1).forEach(cols => {
-                  const statusBadge =
-                    cols[7] === "Lulus"
-                      ? '<span class="badge bg-success">Lulus</span>'
-                      : '<span class="badge bg-warning text-dark">Sedang Berlangsung</span>';
+              data.forEach(s => {
+                const badge =
+                  s.status === "Lulus"
+                    ? '<span class="badge bg-success">Lulus</span>'
+                    : '<span class="badge bg-warning text-dark">Sedang Berlangsung</span>';
             
-                  table.innerHTML += `
-                    <tr>
-                      <td class="text-center">${cols[0]}</td>
-                      <td>${cols[1]}</td>
-                      <td>
-                        <a href="${cols[3]}" target="_blank" style="color:#12d640;">
-                          ${cols[2]}
-                        </a>
-                      </td>
-                      <td>${cols[4]}</td>
-                      <td>${cols[5]}</td>
-                      <td>${cols[6] || '-'}</td>
-                      <td class="text-center">${statusBadge}</td>
-                    </tr>
-                  `;
-                });
+                table.innerHTML += `
+                  <tr>
+                    <td class="text-center">${s.angkatan}</td>
+                    <td>${s.nama}</td>
+                    <td>
+                      <a href="${s.link}" target="_blank" style="color:#12d640;">
+                        ${s.judul}
+                      </a>
+                    </td>
+                    <td>${s.pembimbing1}</td>
+                    <td>${s.pembimbing2 || '-'}</td>
+                    <td>${s.pembimbing3 || '-'}</td>
+                    <td class="text-center">${badge}</td>
+                  </tr>
+                `;
               });
+            }
+            
+            // FILTER EVENT
+            document.getElementById('filter-angkatan').addEventListener('change', applyFilter);
+            document.getElementById('filter-status').addEventListener('change', applyFilter);
+            
+            function applyFilter() {
+              const angkatan = document.getElementById('filter-angkatan').value;
+              const status = document.getElementById('filter-status').value;
+            
+              let filtered = studentsData;
+            
+              if (angkatan) {
+                filtered = filtered.filter(s => s.angkatan === angkatan);
+              }
+              if (status) {
+                filtered = filtered.filter(s => s.status === status);
+              }
+            
+              renderTable(filtered);
+            }
             </script>
-
 
             <tbody id="students-table">
               <!-- Data dari CSV akan dimuat di sini -->
