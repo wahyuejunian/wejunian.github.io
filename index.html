@@ -406,7 +406,7 @@
                 const badge =
                   s.status === "Lulus"
                     ? '<span class="badge bg-success">Lulus</span>'
-                    : '<span class="badge bg-warning text-dark">Sedang Berlangsung</span>';
+                    : '<span class="badge bg-warning text-dark">Berjalan</span>';
             
                 table.innerHTML += `
                   <tr>
@@ -465,10 +465,8 @@
             </script>
 
 
-
-
-            <div class="row mb-3">
-            <div class="col-md-3">
+            <div class="row mb-3 justify-content-end">
+            <div class="col-md-3 me-2">
               <select id="filterAngkatan" class="form-select">
                 <option value="">Semua Angkatan</option>
               </select>
@@ -478,7 +476,7 @@
               <select id="filterStatus" class="form-select">
                 <option value="">Semua Status</option>
                 <option value="Lulus">Lulus</option>
-                <option value="Sedang Berlangsung">Sedang Berlangsung</option>
+                <option value="Berjalan">Berjalan</option>
               </select>
             </div>
           </div>
