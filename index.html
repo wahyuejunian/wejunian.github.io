@@ -367,42 +367,121 @@
               </tr>
             </thead>
 
+            <!-- PapaParse -->
             <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+            
             <script>
+            let studentsData = [];
+            
             Papa.parse('data/students.csv', {
               download: true,
               header: true,
+              skipEmptyLines: true,
               complete: function(results) {
-                const table = document.getElementById('students-table');
             
-                results.data.forEach(s => {
-                  if (!s.nama) return;
+                // SIMPAN DATA
+                studentsData = results.data;
             
-                  const badge =
-                    s.status === "Lulus"
-                      ? '<span class="badge bg-success">Lulus</span>'
-                      : '<span class="badge bg-warning text-dark">Sedang Berlangsung</span>';
-            
-                  table.innerHTML += `
-                    <tr>
-                      <td class="text-center">${s.angkatan}</td>
-                      <td>${s.nama}</td>
-                      <td>
-                        <a href="${s.link}" target="_blank" style="color:#12d640;">
-                          ${s.judul}
-                        </a>
-                      </td>
-                      <td>${s.pembimbing1}</td>
-                      <td>${s.pembimbing2 || '-'}</td>
-                      <td>${s.pembimbing3 || '-'}</td>
-                      <td class="text-center">${badge}</td>
-                    </tr>
-                  `;
+                // SORT: Angkatan ASC, Nama ASC
+                studentsData.sort((a, b) => {
+                  if (a.angkatan !== b.angkatan) {
+                    return a.angkatan - b.angkatan;
+                  }
+                  return a.nama.localeCompare(b.nama);
                 });
+            
+                populateFilters(studentsData);
+                renderTable(studentsData);
               }
             });
+            
+            // ==============================
+            // RENDER TABEL
+            // ==============================
+            function renderTable(data) {
+              const table = document.getElementById('students-table');
+              table.innerHTML = '';
+            
+              data.forEach(s => {
+                const badge =
+                  s.status === "Lulus"
+                    ? '<span class="badge bg-success">Lulus</span>'
+                    : '<span class="badge bg-warning text-dark">Sedang Berlangsung</span>';
+            
+                table.innerHTML += `
+                  <tr>
+                    <td class="text-center">${s.angkatan}</td>
+                    <td>${s.nama}</td>
+                    <td>
+                      <a href="${s.link}" target="_blank" style="color:#12d640;">
+                        ${s.judul}
+                      </a>
+                    </td>
+                    <td>${s.pembimbing1}</td>
+                    <td>${s.pembimbing2 || '-'}</td>
+                    <td>${s.pembimbing3 || '-'}</td>
+                    <td class="text-center">${badge}</td>
+                  </tr>
+                `;
+              });
+            }
+            
+            // ==============================
+            // FILTER DROPDOWN
+            // ==============================
+            function populateFilters(data) {
+              const angkatanSelect = document.getElementById('filterAngkatan');
+              const angkatanSet = [...new Set(data.map(s => s.angkatan))];
+            
+              angkatanSet.sort().forEach(a => {
+                const opt = document.createElement('option');
+                opt.value = a;
+                opt.textContent = a;
+                angkatanSelect.appendChild(opt);
+              });
+            }
+            
+            // ==============================
+            // EVENT FILTER
+            // ==============================
+            document.getElementById('filterAngkatan').addEventListener('change', applyFilter);
+            document.getElementById('filterStatus').addEventListener('change', applyFilter);
+            
+            function applyFilter() {
+              const angkatan = document.getElementById('filterAngkatan').value;
+              const status = document.getElementById('filterStatus').value;
+            
+              let filtered = studentsData;
+            
+              if (angkatan) {
+                filtered = filtered.filter(s => s.angkatan === angkatan);
+              }
+              if (status) {
+                filtered = filtered.filter(s => s.status === status);
+              }
+            
+              renderTable(filtered);
+            }
             </script>
 
+
+
+
+            <div class="row mb-3">
+            <div class="col-md-3">
+              <select id="filterAngkatan" class="form-select">
+                <option value="">Semua Angkatan</option>
+              </select>
+            </div>
+          
+            <div class="col-md-3">
+              <select id="filterStatus" class="form-select">
+                <option value="">Semua Status</option>
+                <option value="Lulus">Lulus</option>
+                <option value="Sedang Berlangsung">Sedang Berlangsung</option>
+              </select>
+            </div>
+          </div>
 
             <tbody id="students-table">
               <!-- Data dari CSV akan dimuat di sini -->
