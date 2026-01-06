@@ -366,86 +366,48 @@
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- Mahasiswa 1 -->
-              <tr>
-                <td class="text-center">2020</td>
-                <td>Hilaludin Akbar</td>
-                <td>
-                  <a href="https://repo.itera.ac.id/depan/submission/SB2401130005"
-                     target="_blank"
-                     style="color:#12d640;">
-                    Analisis Keberadaan Gua Menggunakan Metode 2D Geolistrik dan Induced Polarization, Studi Kasus: Gua Pandan di Kecamatan Marga Sekampung, Kabupaten Lampung Timur
-                  </a>
-                </td>
-                <td>Risky Martin Antosia, S.Si., M.T.</td>
-                <td>Wahyu Eko Junian, S.T., M.T.</td>
-                <td>-</td>
-                <td class="text-center">
-                  <span class="badge bg-success">Lulus</span>
-                </td>
-              </tr>
+            <script>
+            fetch('data/students.csv')
+              .then(response => response.text())
+              .then(csv => {
+                const rows = csv.split('\n').slice(1);
+                const table = document.getElementById('students-table');
+            
+                rows.forEach(row => {
+                  if (!row.trim()) return;
+            
+                  // Split CSV dengan support tanda kutip
+                  const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)
+                                  .map(c => c.replace(/^"|"$/g, ''));
+            
+                  const statusBadge =
+                    cols[7] === "Lulus"
+                      ? '<span class="badge bg-success">Lulus</span>'
+                      : '<span class="badge bg-warning text-dark">Sedang Berlangsung</span>';
+            
+                  table.innerHTML += `
+                    <tr>
+                      <td class="text-center">${cols[0]}</td>
+                      <td>${cols[1]}</td>
+                      <td>
+                        <a href="${cols[3]}" target="_blank" style="color:#12d640;">
+                          ${cols[2]}
+                        </a>
+                      </td>
+                      <td>${cols[4]}</td>
+                      <td>${cols[5]}</td>
+                      <td>${cols[6] || '-'}</td>
+                      <td class="text-center">${statusBadge}</td>
+                    </tr>
+                  `;
+                });
+              });
+            </script>
 
-              <!-- Mahasiswa 2 -->
-              <tr>
-                <td class="text-center">2020</td>
-                <td>Renquita Febwintan Gultom</td>
-                <td>
-                  <a href="https://repo.itera.ac.id/depan/submission/SB2501240008"
-                     target="_blank"
-                     style="color:#12d640;">
-                    Identifikasi Batuan Andesit Dengan Metode VES (Vertical Electrical Sounding) Pada Kecamatan Bergas dan Ungaran Timur, Kabupaten Semarang
-                  </a>
-                </td>
-                <td>Andri Yadi Paembonan, S.Si., M.Sc.</td>
-                <td>Wahyu Eko Junian, S.T., M.T.</td>
-                <td>-</td>
-                <td class="text-center">
-                  <span class="badge bg-success">Lulus</span>
-                </td>
-              </tr>
-              
-              <!-- Mahasiswa 3 -->
-              <tr>
-                <td class="text-center">2020</td>
-                <td>Melinta Br Ginting</td>
-                <td>
-                  <a href="https://repo.itera.ac.id/depan/submission/SB2508220017"
-                     target="_blank"
-                     style="color:#12d640;">
-                    Penentuan Curie Point Depth (CPD), Kedalaman Moho dan Conrad serta Analisis Lineament di Pulau Sulawesi Menggunakan Data EMAG2v3 dan WGM-12
-                  </a>
-                </td>
-                <td>Reza Rizki, S.T., M.T</td>
-                <td>Wahyu Eko Junian, S.T., M.T.</td>
-                <td>-</td>
-                <td class="text-center">
-                  <span class="badge bg-success">Lulus</span>
-                </td>
-              </tr>
-
-              <!-- Mahasiswa 4 -->
-              <tr>
-                <td class="text-center">2020</td>
-                <td>Rifa Prima Adilla</td>
-                <td>
-                  <a href="https://repo.itera.ac.id/depan/submission/SB2412180016"
-                     target="_blank"
-                     style="color:#12d640;">
-                    Analisis Pemodelan Inversi Magnetotelurik Satu-Dimensi Dengan Algoritma Grey Wolf Optimizer di Wilayah East Tenant, Australia
-                  </a>
-                </td>
-                <td>Selvi Misnia Irawati, S.Si., M.T.</td>
-                <td>Wahyu Eko Junian, S.T., M.T.</td>
-                <td>-</td>
-                <td class="text-center">
-                  <span class="badge bg-success">Lulus</span>
-                </td>
-              </tr>
-              
-              <!-- Tambahkan mahasiswa lain di sini -->
-
+            <tbody id="students-table">
+              <!-- Data dari CSV akan dimuat di sini -->
             </tbody>
+
           </table>
         </div>
 
