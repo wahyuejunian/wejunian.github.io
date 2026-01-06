@@ -342,17 +342,40 @@
   <!-- End teaching Section -->
 
 
-<!-- Start Students Section -->
-<section id="students" class="services">
-  <div class="container">
-    <div class="section-title">
-      <h2>Students</h2>
-      <p>Daftar Mahasiswa Bimbingan Tugas Akhir</p>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-12" data-aos="fade-up">
-
+    <!-- ================= STUDENTS SECTION ================= -->
+    <section id="students" class="services py-5">
+      <div class="container">
+    
+        <div class="section-title mb-4 text-center">
+          <h2>Students</h2>
+          <p>Daftar Mahasiswa Bimbingan Tugas Akhir</p>
+        </div>
+    
+        <!-- ====== GRAFIK ====== -->
+        <div class="row mb-4">
+          <div class="col-lg-12">
+            <canvas id="angkatanChart" style="max-width:800px; margin:auto;"></canvas>
+          </div>
+        </div>
+    
+        <!-- ====== FILTER ====== -->
+        <div class="row mb-3 justify-content-end">
+          <div class="col-md-3 me-2">
+            <select id="filterAngkatan" class="form-select">
+              <option value="">Semua Angkatan</option>
+            </select>
+          </div>
+    
+          <div class="col-md-3">
+            <select id="filterStatus" class="form-select">
+              <option value="">Semua Status</option>
+              <option value="Lulus">Lulus</option>
+              <option value="Berjalan">Berjalan</option>
+            </select>
+          </div>
+        </div>
+    
+        <!-- ====== TABEL ====== -->
         <div class="table-responsive">
           <table class="table table-dark table-striped table-bordered align-middle">
             <thead class="text-center">
@@ -366,137 +389,164 @@
                 <th>Status</th>
               </tr>
             </thead>
-
-            <!-- PapaParse -->
-            <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-            
-            <script>
-            document.addEventListener('DOMContentLoaded', function () {
-            
-              let studentsData = [];
-            
-              Papa.parse('data/students.csv', {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                complete: function(results) {
-            
-                  studentsData = results.data;
-            
-                  // SORT: Angkatan ASC, Nama ASC
-                  studentsData.sort((a, b) => {
-                    if (a.angkatan !== b.angkatan) {
-                      return a.angkatan - b.angkatan;
-                    }
-                    return a.nama.localeCompare(b.nama);
-                  });
-            
-                  populateFilters(studentsData);
-                  renderTable(studentsData);
-                }
-              });
-            
-              // ==============================
-              // RENDER TABEL
-              // ==============================
-              function renderTable(data) {
-                const table = document.getElementById('students-table');
-                table.innerHTML = '';
-            
-                data.forEach(s => {
-                  const badge =
-                    s.status === "Lulus"
-                      ? '<span class="badge bg-success">Lulus</span>'
-                      : '<span class="badge bg-warning text-dark">Berjalan</span>';
-            
-                  table.innerHTML += `
-                    <tr>
-                      <td class="text-center">${s.angkatan}</td>
-                      <td>${s.nama}</td>
-                      <td>
-                        <a href="${s.link}" target="_blank" style="color:#12d640;">
-                          ${s.judul}
-                        </a>
-                      </td>
-                      <td>${s.pembimbing1}</td>
-                      <td>${s.pembimbing2 || '-'}</td>
-                      <td>${s.pembimbing3 || '-'}</td>
-                      <td class="text-center">${badge}</td>
-                    </tr>
-                  `;
-                });
-              }
-            
-              // ==============================
-              // FILTER DROPDOWN
-              // ==============================
-              function populateFilters(data) {
-                const angkatanSelect = document.getElementById('filterAngkatan');
-            
-                const angkatanSet = [...new Set(data.map(s => s.angkatan))];
-                angkatanSet.sort().forEach(a => {
-                  const opt = document.createElement('option');
-                  opt.value = a;
-                  opt.textContent = a;
-                  angkatanSelect.appendChild(opt);
-                });
-              }
-            
-              // ==============================
-              // EVENT FILTER
-              // ==============================
-              document.getElementById('filterAngkatan').addEventListener('change', applyFilter);
-              document.getElementById('filterStatus').addEventListener('change', applyFilter);
-            
-              function applyFilter() {
-                const angkatan = document.getElementById('filterAngkatan').value;
-                const status = document.getElementById('filterStatus').value;
-            
-                let filtered = studentsData;
-            
-                if (angkatan) {
-                  filtered = filtered.filter(s => s.angkatan === angkatan);
-                }
-                if (status) {
-                  filtered = filtered.filter(s => s.status === status);
-                }
-            
-                renderTable(filtered);
-              }
-            
-            });
-            </script>
-
-
-
-            <div class="row mb-3 justify-content-end">
-            <div class="col-md-3 me-2">
-              <select id="filterAngkatan" class="form-select">
-                <option value="">Semua Angkatan</option>
-              </select>
-            </div>
-          
-            <div class="col-md-3">
-              <select id="filterStatus" class="form-select">
-                <option value="">Semua Status</option>
-                <option value="Lulus">Lulus</option>
-                <option value="Berjalan">Berjalan</option>
-              </select>
-            </div>
-          </div>
-
             <tbody id="students-table">
-              <!-- Data dari CSV akan dimuat di sini -->
+              <!-- Data dari CSV -->
             </tbody>
-
           </table>
         </div>
-
+    
       </div>
-    </div>
-  </div>
-</section>
-<!-- End Students Section -->
+    </section>
+    <!-- ================= END STUDENTS ================= -->
+    
+    
+    <!-- ================= SCRIPT ================= -->
+    
+    <!-- PapaParse -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    
+      let studentsData = [];
+      let angkatanChart;
+    
+      Papa.parse('data/students.csv', {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+    
+          studentsData = results.data;
+    
+          // SORT: Angkatan ASC, Nama ASC
+          studentsData.sort((a, b) => {
+            if (a.angkatan !== b.angkatan) {
+              return a.angkatan - b.angkatan;
+            }
+            return a.nama.localeCompare(b.nama);
+          });
+    
+          populateFilters(studentsData);
+          renderTable(studentsData);
+          renderAngkatanChart(studentsData);
+        }
+      });
+    
+      // ================= RENDER TABLE =================
+      function renderTable(data) {
+        const table = document.getElementById('students-table');
+        table.innerHTML = '';
+    
+        data.forEach(s => {
+          const badge =
+            s.status === "Lulus"
+              ? '<span class="badge bg-success">Lulus</span>'
+              : '<span class="badge bg-warning text-dark">Berjalan</span>';
+    
+          table.innerHTML += `
+            <tr>
+              <td class="text-center">${s.angkatan}</td>
+              <td>${s.nama}</td>
+              <td>
+                <a href="${s.link}" target="_blank" style="color:#12d640;">
+                  ${s.judul}
+                </a>
+              </td>
+              <td>${s.pembimbing1}</td>
+              <td>${s.pembimbing2 || '-'}</td>
+              <td>${s.pembimbing3 || '-'}</td>
+              <td class="text-center">${badge}</td>
+            </tr>
+          `;
+        });
+      }
+    
+      // ================= FILTER DROPDOWN =================
+      function populateFilters(data) {
+        const angkatanSelect = document.getElementById('filterAngkatan');
+    
+        const angkatanSet = [...new Set(data.map(s => s.angkatan))];
+        angkatanSet.sort().forEach(a => {
+          const opt = document.createElement('option');
+          opt.value = a;
+          opt.textContent = a;
+          angkatanSelect.appendChild(opt);
+        });
+      }
+    
+      // ================= APPLY FILTER =================
+      document.getElementById('filterAngkatan').addEventListener('change', applyFilter);
+      document.getElementById('filterStatus').addEventListener('change', applyFilter);
+    
+      function applyFilter() {
+        const angkatan = document.getElementById('filterAngkatan').value;
+        const status = document.getElementById('filterStatus').value;
+    
+        let filtered = studentsData;
+    
+        if (angkatan) {
+          filtered = filtered.filter(s => s.angkatan === angkatan);
+        }
+        if (status) {
+          filtered = filtered.filter(s => s.status === status);
+        }
+    
+        renderTable(filtered);
+        renderAngkatanChart(filtered);
+      }
+    
+      // ================= GRAFIK =================
+      function renderAngkatanChart(data) {
+    
+        const angkatanCount = {};
+        data.forEach(s => {
+          angkatanCount[s.angkatan] = (angkatanCount[s.angkatan] || 0) + 1;
+        });
+    
+        const labels = Object.keys(angkatanCount).sort();
+        const values = labels.map(a => angkatanCount[a]);
+    
+        const ctx = document.getElementById('angkatanChart').getContext('2d');
+    
+        if (angkatanChart) angkatanChart.destroy();
+    
+        angkatanChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Jumlah Mahasiswa',
+              data: values,
+              backgroundColor: 'rgba(18,214,64,0.6)',
+              borderColor: 'rgba(18,214,64,1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { display: false },
+              title: {
+                display: true,
+                text: 'Jumlah Mahasiswa per Angkatan'
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: { precision: 0 }
+              }
+            }
+          }
+        });
+      }
+    
+    });
+    </script>
 
 
 
