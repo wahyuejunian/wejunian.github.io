@@ -367,19 +367,49 @@
               </tr>
             </thead>
             <script>
+            function parseCSV(text) {
+              const rows = [];
+              let row = [];
+              let current = '';
+              let inQuotes = false;
+            
+              for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const next = text[i + 1];
+            
+                if (char === '"' && next === '"') {
+                  current += '"';
+                  i++;
+                } else if (char === '"') {
+                  inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                  row.push(current);
+                  current = '';
+                } else if ((char === '\n' || char === '\r') && !inQuotes) {
+                  if (current || row.length) {
+                    row.push(current);
+                    rows.push(row);
+                    row = [];
+                    current = '';
+                  }
+                } else {
+                  current += char;
+                }
+              }
+              if (current || row.length) {
+                row.push(current);
+                rows.push(row);
+              }
+              return rows;
+            }
+            
             fetch('data/students.csv')
-              .then(response => response.text())
-              .then(csv => {
-                const rows = csv.split('\n').slice(1);
+              .then(res => res.text())
+              .then(text => {
+                const data = parseCSV(text);
                 const table = document.getElementById('students-table');
             
-                rows.forEach(row => {
-                  if (!row.trim()) return;
-            
-                  // Split CSV dengan support tanda kutip
-                  const cols = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g)
-                                  .map(c => c.replace(/^"|"$/g, ''));
-            
+                data.slice(1).forEach(cols => {
                   const statusBadge =
                     cols[7] === "Lulus"
                       ? '<span class="badge bg-success">Lulus</span>'
@@ -403,6 +433,7 @@
                 });
               });
             </script>
+
 
             <tbody id="students-table">
               <!-- Data dari CSV akan dimuat di sini -->
