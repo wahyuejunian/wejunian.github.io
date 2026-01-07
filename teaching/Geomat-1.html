@@ -15,9 +15,13 @@
 
   <!-- Vendor CSS -->
   <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+
+  <!-- Template CSS -->
   <link href="../assets/css/style.css" rel="stylesheet">
 
-  <!-- DearFlip -->
+  <!-- ===== DearFlip Flipbook ===== -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dearflip@1.7.3/dist/dearflip.min.css">
   <script src="https://cdn.jsdelivr.net/npm/dearflip@1.7.3/dist/dearflip.min.js"></script>
 </head>
@@ -30,12 +34,12 @@
     <h2 style="color:#12d640">Geomatematika I</h2>
 
     <p>
-      Materi perkuliahan Geomatematika.  
-      Klik setiap topik untuk membuka modul dalam bentuk flipbook.
+      Materi perkuliahan Geomatematika I.  
+      Klik setiap pertemuan untuk membuka modul dalam bentuk flipbook.
     </p>
 
-    <!-- TABEL GEOMATEMATIKA I -->
-    <h3>Materi Pembelajaran Geomatematika I</h3>
+    <!-- ================= TABLE ================= -->
+    <h3>Materi Pembelajaran</h3>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -44,52 +48,93 @@
         </tr>
       </thead>
       <tbody>
+
         <tr>
           <td>I</td>
           <td>
-            <a href="#" class="open-pdf" data-pdf="teaching/WEJ_Pekan%2011%20Geomatematika%20I.pdf">
-              Pendahuluan
+            <a href="#" class="open-pdf"
+               data-pdf="teaching/WEJ_Pekan%201%20Geomatematika%20I.pdf">
+               Pendahuluan
             </a>
           </td>
         </tr>
+
         <tr>
           <td>II</td>
           <td>
-            <a href="#" class="open-pdf" data-pdf="teaching/WEJ_Pekan%2011%20Geomatematika%20I.pdf">
-              Deret (1)
+            <a href="#" class="open-pdf"
+               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
+               Deret (1)
             </a>
           </td>
         </tr>
+
         <tr>
           <td>III</td>
           <td>
-            <a href="#" class="open-pdf" data-pdf="teaching/WEJ_Pekan%2011%20Geomatematika%20I.pdf">
-              Deret (2)
+            <a href="#" class="open-pdf"
+               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
+               Deret (2)
             </a>
           </td>
         </tr>
+
         <tr>
           <td>IV</td>
           <td>
-            <a href="#" class="open-pdf" data-pdf="teaching/WEJ_Pekan%2011%20Geomatematika%20I.pdf">
-              Bilangan Kompleks
+            <a href="#" class="open-pdf"
+               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
+               Bilangan Kompleks
             </a>
           </td>
         </tr>
+
+        <tr>
+          <td>V</td>
+          <td>
+            <a href="#" class="open-pdf"
+               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
+               Aljabar Linier
+            </a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>VIII</td>
+          <td>
+            <a href="#" class="open-pdf"
+               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
+               Ujian Tengah Semester
+            </a>
+          </td>
+        </tr>
+
         <tr>
           <td>IX</td>
           <td>
-            <a href="#" class="open-pdf" data-pdf="teaching/WEJ_Pekan%2011%20Geomatematika%20I.pdf">
-              Persamaan Diferensial Parsial
+            <a href="#" class="open-pdf"
+               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
+               Persamaan Diferensial Parsial
             </a>
           </td>
         </tr>
+
+        <tr>
+          <td>XVI</td>
+          <td>
+            <a href="#" class="open-pdf"
+               data-pdf="teaching/WEJ_Pekan%2011%20Geomatematika%20I.pdf">
+               Ujian Akhir Semester
+            </a>
+          </td>
+        </tr>
+
       </tbody>
     </table>
   </div>
 </main>
 
-<!-- MODAL FLIPBOOK -->
+<!-- ================= MODAL FLIPBOOK ================= -->
 <div class="modal fade" id="pdfModal" tabindex="-1">
   <div class="modal-dialog modal-xl modal-dialog-centered">
     <div class="modal-content">
@@ -110,19 +155,18 @@
 <script src="../assets/vendor/jquery/jquery.min.js"></script>
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- SCRIPT FLIPBOOK -->
+<!-- ================= SCRIPT FLIPBOOK ================= -->
 <script>
 document.querySelectorAll('.open-pdf').forEach(item => {
   item.addEventListener('click', function(e) {
     e.preventDefault();
 
-    let pdfFile = this.dataset.pdf;
+    let pdf = this.dataset.pdf;
     let container = document.getElementById('flipbookContainer');
-
     container.innerHTML = "";
 
     new DearFlip.DFLIP({
-      source: pdfFile,
+      source: pdf,
       webgl: true
     }, container);
 
