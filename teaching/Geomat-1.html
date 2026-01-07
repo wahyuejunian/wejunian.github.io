@@ -2,173 +2,152 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <title>Geomatematika I</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Geomatematika I</title>
-
-  <!-- Favicons -->
-  <link href="../assets/img/favicon.png" rel="icon">
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
-
-  <!-- Vendor CSS -->
+  <!-- Bootstrap CSS -->
   <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../assets/vendor/icofont/icofont.min.css" rel="stylesheet">
-  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
 
-  <!-- Template CSS -->
-  <link href="../assets/css/style.css" rel="stylesheet">
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
-  <!-- ===== DearFlip Flipbook ===== -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dearflip@1.7.3/dist/dearflip.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/dearflip@1.7.3/dist/dearflip.min.js"></script>
+  <style>
+    #pdfViewer {
+      width: 100%;
+      height: 80vh;
+      overflow: auto;
+      background: #222;
+      text-align: center;
+    }
+    canvas {
+      margin: 10px auto;
+      display: block;
+      background: #fff;
+    }
+    a.open-pdf {
+      cursor: pointer;
+      color: #12d640;
+      font-weight: 600;
+    }
+    a.open-pdf:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 
 <body>
 
-<main id="main">
-  <div class="container">
-    <br>
-    <h2 style="color:#12d640">Geomatematika I</h2>
+<div class="container mt-4">
+  <h2 style="color:#12d640">Geomatematika I</h2>
+  <p>Klik setiap pertemuan untuk membuka materi.</p>
 
-    <p>
-      Materi perkuliahan Geomatematika I.  
-      Klik setiap pertemuan untuk membuka modul dalam bentuk flipbook.
-    </p>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Pertemuan</th>
+        <th>Topik</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>I</td>
+        <td>
+          <a class="open-pdf" data-pdf="teaching/WEJ_Pekan%201%20Geomatematika%20I.pdf">
+            Pendahuluan
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>II</td>
+        <td>
+          <a class="open-pdf" data-pdf="teaching/WEJ_Pekan%202%20Geomatematika%20I.pdf">
+            Deret (1)
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>III</td>
+        <td>
+          <a class="open-pdf" data-pdf="teaching/WEJ_Pekan%203%20Geomatematika%20I.pdf">
+            Deret (2)
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>IV</td>
+        <td>
+          <a class="open-pdf" data-pdf="teaching/WEJ_Pekan%204%20Geomatematika%20I.pdf">
+            Bilangan Kompleks
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>IX</td>
+        <td>
+          <a class="open-pdf" data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
+            Persamaan Diferensial Parsial
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-    <!-- ================= TABLE ================= -->
-    <h3>Materi Pembelajaran</h3>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th style="color:#12d640">Pertemuan</th>
-          <th style="color:#12d640">Topik</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <tr>
-          <td>I</td>
-          <td>
-            <a href="#" class="open-pdf"
-               data-pdf="teaching/WEJ_Pekan%201%20Geomatematika%20I.pdf">
-               Pendahuluan
-            </a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>II</td>
-          <td>
-            <a href="#" class="open-pdf"
-               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
-               Deret (1)
-            </a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>III</td>
-          <td>
-            <a href="#" class="open-pdf"
-               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
-               Deret (2)
-            </a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>IV</td>
-          <td>
-            <a href="#" class="open-pdf"
-               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
-               Bilangan Kompleks
-            </a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>V</td>
-          <td>
-            <a href="#" class="open-pdf"
-               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
-               Aljabar Linier
-            </a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>VIII</td>
-          <td>
-            <a href="#" class="open-pdf"
-               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
-               Ujian Tengah Semester
-            </a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>IX</td>
-          <td>
-            <a href="#" class="open-pdf"
-               data-pdf="teaching/WEJ_Pekan%209%20Geomatematika%20I.pdf">
-               Persamaan Diferensial Parsial
-            </a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>XVI</td>
-          <td>
-            <a href="#" class="open-pdf"
-               data-pdf="teaching/WEJ_Pekan%2011%20Geomatematika%20I.pdf">
-               Ujian Akhir Semester
-            </a>
-          </td>
-        </tr>
-
-      </tbody>
-    </table>
-  </div>
-</main>
-
-<!-- ================= MODAL FLIPBOOK ================= -->
+<!-- Modal -->
 <div class="modal fade" id="pdfModal" tabindex="-1">
   <div class="modal-dialog modal-xl modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Materi Perkuliahan</h5>
-        <button type="button" class="close" data-dismiss="modal">
+        <button class="close" data-dismiss="modal">
           <span>&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div id="flipbookContainer" style="height:80vh;"></div>
+        <div id="pdfViewer"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Vendor JS -->
+<!-- JS -->
 <script src="../assets/vendor/jquery/jquery.min.js"></script>
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- ================= SCRIPT FLIPBOOK ================= -->
 <script>
-document.querySelectorAll('.open-pdf').forEach(item => {
-  item.addEventListener('click', function(e) {
-    e.preventDefault();
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-    let pdf = this.dataset.pdf;
-    let container = document.getElementById('flipbookContainer');
-    container.innerHTML = "";
+let currentPDF = null;
 
-    new DearFlip.DFLIP({
-      source: pdf,
-      webgl: true
-    }, container);
+document.querySelectorAll('.open-pdf').forEach(link => {
+  link.addEventListener('click', function () {
+    let url = this.dataset.pdf;
+    let viewer = document.getElementById('pdfViewer');
+    viewer.innerHTML = "";
+
+    pdfjsLib.getDocument(url).promise.then(pdf => {
+      currentPDF = pdf;
+
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        pdf.getPage(pageNum).then(page => {
+          let scale = 1.2;
+          let viewport = page.getViewport({ scale: scale });
+
+          let canvas = document.createElement("canvas");
+          let context = canvas.getContext("2d");
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          page.render({
+            canvasContext: context,
+            viewport: viewport
+          });
+
+          viewer.appendChild(canvas);
+        });
+      }
+    });
 
     $('#pdfModal').modal('show');
   });
