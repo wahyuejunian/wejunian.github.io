@@ -401,6 +401,35 @@
       let studentsData = [];
       let angkatanChart;
     
+      // ================= PUBLICATION SECTION =================
+      Papa.parse('data/publications.csv', {
+        download: true,
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+          const pubData = results.data;
+          const publicationList = document.getElementById('publication-list');
+          publicationList.innerHTML = ''; // Bersihkan kontainer sebelum memuat data
+
+          // Urutkan data berdasarkan tahun terbaru (opsional, jika ingin yang terbaru di atas)
+          pubData.sort((a, b) => b.tahun - a.tahun);
+
+          pubData.forEach(pub => {
+            publicationList.innerHTML += `
+              <div class="col-md-12 mt-4 mt-md-0 icon-box" data-aos="fade-up" data-aos-delay="100">
+                <h4 style="text-align:left;">
+                  <a href="${pub.link}" target="_blank" style="color:#12d640">${pub.judul}</a> 
+                </h4>
+                <h5 style="text-align:left;"><em>${pub.jurnal}, ${pub.tahun}</em></h5>
+              </div>
+            `;
+          });
+        },
+        error: function(err) {
+          console.error("Gagal memuat data publikasi:", err);
+        }
+      });
+      
       Papa.parse('data/students.csv', {
         download: true,
         header: true,
